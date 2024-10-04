@@ -1,0 +1,409 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={MING Yidong's CV},
+    pdfauthor={MING Yidong},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in September 2024}\hspace{\widthof{Last updated in September 2024}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+
+    \begin{header}
+        \fontsize{25 pt}{25 pt}\selectfont MING Yidong 
+
+        \vspace{5 pt}
+
+        \normalsize
+        \mbox{Hong Kong}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{mailto:yidonming2-c@my.cityu.edu.hk}{yidonming2-c@my.cityu.edu.hk}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{tel:+86-541-999-99-99}{+852 5197 2928}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{updated 4 Oct. 2024}{updated 4 Oct. 2024}}%
+        
+    \end{header}
+
+    \vspace{5 pt - 0.3 cm}
+
+
+
+    \section{Education}
+
+
+
+        
+        \begin{twocolentry}{
+            Sept 2023 – June 2027
+        }
+            \textbf{City University of  Hong Kong}
+            BSc in Data Science\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item GPA: 4.13 / 4.3
+            \end{highlights}
+        \end{onecolentry}
+        
+\section{Awards \& Honors}
+
+\begin{itemize}
+    \item Dean's List (2023 Semester A \& 2024 Semester B, SGPA > 3.7)
+    \item CityU Tiger Program (2024, Top 10\%)
+    \item Chi-Li Pao Foundation Scholarships for Academic Outstanding Students (2023/2024) 
+    \begin{itemize}
+        \item Only one award available in each College or School (CE and CB have 2 positions)
+    \end{itemize}
+    \item Hua Tai Securities Investment Banking IBD Internship Preparatory Camp (2nd Place) 
+    \begin{itemize}
+        \item Awarded an internship opportunity at Hua Tai Securities, but declined due to a scheduling conflict with academic commitments.
+    \end{itemize}
+\end{itemize}
+
+    \section{Research Experience}
+
+
+
+        
+        \begin{twocolentry}{
+            June 2024 – Sep 2024
+            
+        }
+            \textbf{Diamond Inclusion Detection,CityU}, Research Student Helper(job no.P24MA011 research project no. 9380162 )\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Using Python for image data processing and data augmentation to prepare for model training 
+                \item Write a search engine in Python to facilitate searching for corresponding diamond original images, diamond images with inclusions, and inclusion images in a database for analysis. 
+                \item Based on the work of predecessors on GitHub, independently form a group to train a U-Net model for image semantic segmentation and binary prediction of inclusions 
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+        
+    \section{ Work Experience}
+
+
+
+        
+        \begin{twocolentry}{
+            Feb 2024 – Aug 2024
+        }
+            \textbf{Office Assistant}, School of Data Science of CityU\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Neat and tidy clerical support including document processing, mailing and filing, etc.
+                \item Fast and accurate data processing including data entry, desktop research and general analysis
+                \item Organizing functions, e.g. orientation, interviews, Information Day, and other activities and events
+                \item Professional and quality customer services, e.g. greet and assist walk-in visitors, and handling telephone enquiries
+                \item Any ad-hoc duties as assigned by SDSC
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+        
+ \begin{twocolentry}{
+            Sep 2024 – Aug 2025
+        }
+            \textbf{Office Assistant}, Department of Data Science of CityU\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Neat and tidy clerical support including document processing, mailing and filing, etc.
+                \item Fast and accurate data processing including data entry, desktop research and general analysis
+                \item Organizing functions, e.g. orientation, interviews, Information Day, and other activities and events
+                \item Professional and quality customer services, e.g. greet and assist walk-in visitors, and handling telephone enquiries
+                \item Any ad-hoc duties as assigned by DS
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+        \begin{twocolentry}{
+            Dec 2023 – Feb 2024
+        }
+            \textbf{Digital Marketing}, Shang Hai Golden Education \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Online Promotion:Video Editing,Content Push,Posters,Social,Managed and operated GaoDun Education's WeChat official account and Little Red Book (Xiaohongshu) account, ensuring consistent and engaging content.
+                \item Event Planning:Organized and Assisted in Events: Collaborated in planning and executing both online and offline events, supporting the promotion of GaoDun Education and ensuring a seamless experience for participants.
+
+                \item Offline Interviews:Conducted interviews with accomplished senior students, learning from their experiences and insights, and shared those on social media platforms.
+                \item Product Experience Center:Evaluated Golden Education's flagship products at the Product Experience Center, providing detailed experience reports and feedback.
+                \item Data Analysis:Analyzed customer data to identify potential clients interested in specific products and developed targeted marketing strategies to promote those products.
+            \end{highlights}
+        \end{onecolentry}
+        
+        \vspace{0.2 cm}
+        \begin{twocolentry}{
+            June 2024 – Aug 2024
+        }
+\textbf{Digital Marketing}, Guangzhou Saifu Information Technology Co., LTD\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Assist managers in developing digital marketing strategies and campaigns to achieve traffic and business objectives
+                \item Act as a "Counting Treasure" ambassador to introduce the functionality of the application
+                \item Assist in the planning and execution of various digital channels, including wechat public account operation, digital marketing, email and social media (such as Douyin, Kuaishou and other platforms).
+                \item Assist in coordinating advertising and marketing support, including influencers, social media and other digital advertising to promote sales through these channels.
+                \item Assist in the collection of information and support the measurement and reporting of digital marketing campaign performance against objectives (return on investment and key performance indicators).
+                \item Collaborate and communicate effectively with internal teams and external personnel to support the planning and execution of digital marketing campaigns.
+                \item Support the planning and execution of website development projects.
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+    
+    \section{Projects}
+
+
+
+        
+        \begin{twocolentry}{
+            
+        }
+            \textbf{Introduction to Data Science Group Project}\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Students should form groups (up to 6 members) and choose an interesting topic related to data science for literature research, highlighting its contributions and value while discussing the role of data science. Finally, they will consolidate their findings into a story-based presentation and a report. Topic: Application of Deep learning Algorithm in the Perception Module of Autonomous Driving System
+                \item Tools Used: PowerPoint,Google Scholar,Google Docs,Excel
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+            
+        }
+            \textbf{Visualization Design Project}\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Problem Statement: Control points were closed and reopened from 2021 to 2023 due to COVID-19, causing significant variations in passenger flows.
+Question: How did passenger flows for Hong Kong residents, Mainland visitors, and other visitors change at different control points during this period?
+                \item Tools Used: Python,Excel,Tableau
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+           
+        }
+            \textbf{Story Visualization Project}\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item contrast between Hong Kong Island residents and non-Hong Kong Island residents in terms of population and economic
+
+                \item Tools Used:Python,Excel,Tableau
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+    
+    \section{Technologies}
+
+
+
+        
+        \begin{onecolentry}
+            \textbf{Languages:} Python, C++,  SQL
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Framework \& Tools:} Tableau,PyTorch(Continue learning),TensorFlow(Continue learning)
+        \end{onecolentry}
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Package:} Numpy,Panda,Seaborn,Matplotlib
+        \end{onecolentry}
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Others:} Microsoft Office,Adobe Photoshop,Capcut,Math foundation(Calculus,Linear Algebra,Probability and Statistic)
+        \end{onecolentry}
+        \vspace{0.2 cm}
+    
+
+\end{document}
